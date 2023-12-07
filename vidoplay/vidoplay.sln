@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vidoplay", "vidoplay\vidoplay.vcxproj", "{520D93B2-1370-4017-8E36-56D304E973E2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "videoclient", "videoclient\videoclient.vcxproj", "{75C5C891-ED17-4E10-A97A-F3E4F89E5A74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{520D93B2-1370-4017-8E36-56D304E973E2}.Release|x64.Build.0 = Release|x64
 		{520D93B2-1370-4017-8E36-56D304E973E2}.Release|x86.ActiveCfg = Release|Win32
 		{520D93B2-1370-4017-8E36-56D304E973E2}.Release|x86.Build.0 = Release|Win32
+		{75C5C891-ED17-4E10-A97A-F3E4F89E5A74}.Debug|x64.ActiveCfg = Debug|x64
+		{75C5C891-ED17-4E10-A97A-F3E4F89E5A74}.Debug|x64.Build.0 = Debug|x64
+		{75C5C891-ED17-4E10-A97A-F3E4F89E5A74}.Debug|x86.ActiveCfg = Debug|Win32
+		{75C5C891-ED17-4E10-A97A-F3E4F89E5A74}.Debug|x86.Build.0 = Debug|Win32
+		{75C5C891-ED17-4E10-A97A-F3E4F89E5A74}.Release|x64.ActiveCfg = Release|x64
+		{75C5C891-ED17-4E10-A97A-F3E4F89E5A74}.Release|x64.Build.0 = Release|x64
+		{75C5C891-ED17-4E10-A97A-F3E4F89E5A74}.Release|x86.ActiveCfg = Release|Win32
+		{75C5C891-ED17-4E10-A97A-F3E4F89E5A74}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
