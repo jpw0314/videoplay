@@ -93,9 +93,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>include;include/vlc;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libvlc.lib;libvlccore.lib;</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -189,6 +192,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="videoclient.h" />
     <ClInclude Include="videoclientDlg.h" />
+    <ClInclude Include="Vlc.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -199,6 +203,7 @@
     </ClCompile>
     <ClCompile Include="videoclient.cpp" />
     <ClCompile Include="videoclientDlg.cpp" />
+    <ClCompile Include="Vlc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="videoclient.rc" />
