@@ -7,6 +7,7 @@
 #include "videoclient.h"
 #include "videoclientDlg.h"
 #include "afxdialogex.h"
+#include "VideoClientController.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -67,6 +68,7 @@ BOOL CvideoclientDlg::OnInitDialog()
 	m_volume.SetTicFreq(20);
 	SetDlgItemText(IDC_STATIC_VOLUME, _T("100%"));
 	SetDlgItemText(IDC_STATIC_TIME, _T("--:--:--/--:--:--"));
+	m_controllerl->SetHwnd(GetSafeHwnd());
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -114,6 +116,13 @@ void CvideoclientDlg::OnTimer(UINT_PTR nIDEvent)
 	if (nIDEvent==0)
 	{
 		//控制层
+		float pos=m_controllerl->videoctrl(VLC_GET_POSITION);
+		if (pos!=-1.0)
+		{
+			CString strpos;
+			strpos.Format(_T("%f"), pos);
+			SetDlgItemText(IDC_STATIC_TIME, strpos);
+		}
 	}
 	CDialog::OnTimer(nIDEvent);
 }
@@ -131,16 +140,19 @@ void CvideoclientDlg::OnBnClickedBtnPlay()
 {
 	if (m_status==false)
 	{
+		CString url;
+		m_url.GetWindowText(url);
+		m_controllerl->SetMedia(m_controllerl->unicode2utf8((LPCTSTR)url));
+		TRACE("%s", url);
 		m_btnplay.SetWindowText(_T("暂停"));
 		m_status = true;
-		//TODO controller 的播放接口
+		m_controllerl->videoctrl(VLC_PLAY);
 	}
 	else {
 		m_btnplay.SetWindowTextW(_T("播放"));
 		m_status = false;
-		// TODO: controller 的暂停接口
+		m_controllerl->videoctrl(VLC_PAUSE);
 	}
-	
 }
 
 
@@ -148,7 +160,7 @@ void CvideoclientDlg::OnBnClickedBtnStop()
 {
 	m_btnplay.SetWindowText(_T("播放"));
 	m_status = false;
-	// TODO: controller 的停止接口
+	m_controllerl->videoctrl(VLC_STOP);
 }
 
 
@@ -183,6 +195,7 @@ void CvideoclientDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		CString strVolume;
 		strVolume.Format(_T("%d%%"), (nPos));
 		SetDlgItemText(IDC_STATIC_TIME, strVolume);
+		m_controllerl->SetPosition((float)nPos);
 	}
 	CDialog::OnHScroll(nSBCode, nPos, pScrollBar);
 }
@@ -198,7 +211,10 @@ void CvideoclientDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		CString strVolume;
 		strVolume.Format(_T("%d%%"), (100 - nPos));
 		SetDlgItemText(IDC_STATIC_VOLUME, strVolume);
+		m_controllerl->SetVolume(100-nPos);
 	}
 	
 	CDialog::OnVScroll(nSBCode, nPos, pScrollBar);
 }
+
+

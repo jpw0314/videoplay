@@ -40,7 +40,7 @@ public:
 		m_instance = libvlc_new(0, NULL);
 		m_media = NULL;
 		m_palyer = NULL;
-
+		m_hWnd = NULL;
 	}
 	~Vlc();
 public:
@@ -54,9 +54,12 @@ public:
 	int GetVolume();
 	int SetVloume(int volume);
 	VlcSize GetMediaInfo();
+	std::string unicode2utf8(const std::wstring& strIn);
 protected:
 	libvlc_instance_t* m_instance;
 	libvlc_media_t* m_media;
 	libvlc_media_player_t* m_palyer;
+	std::string m_url;
+	HWND m_hWnd;
 };
 

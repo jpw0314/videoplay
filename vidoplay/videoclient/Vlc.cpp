@@ -27,18 +27,30 @@ Vlc::~Vlc()
 
 int Vlc::SetMedia(std::string strUrl)
 {
-	if (m_instance == NULL)return -1;
-	m_media=libvlc_media_new_path(m_instance,strUrl.c_str());
+	if ((m_instance == NULL)||(m_hWnd=NULL))return -1;
+	if (m_url==strUrl)return 0;
+	m_url = strUrl;
+	if (m_media != NULL)
+	{
+		libvlc_media_release(m_media);
+		m_media = NULL;
+	}
+	m_media=libvlc_media_new_location(m_instance,strUrl.c_str());
 	if (m_media == NULL) return -2;
+	if (m_palyer != NULL)
+	{
+		libvlc_media_player_release(m_palyer);
+		m_palyer = NULL;
+	}
 	m_palyer = libvlc_media_player_new_from_media(m_media);
 	if (m_palyer == NULL) return -3;
+	libvlc_media_player_set_hwnd(m_palyer, m_hWnd );
 	return 0;
 }
 
 int Vlc::SetHwnd(HWND hWnd)
 {
-	if (!m_palyer||!m_instance||!m_media) return -1;
-	libvlc_media_player_set_hwnd(m_palyer, hWnd);
+	m_hWnd = hWnd;
 	return 0;
 }
 
@@ -90,4 +102,13 @@ VlcSize Vlc::GetMediaInfo()
 {
 	if (!m_palyer || !m_instance || !m_media) VlcSize(-1,-1);
 	return VlcSize(libvlc_video_get_width(m_palyer),libvlc_video_get_height(m_palyer));
+}
+
+std::string Vlc::unicode2utf8(const std::wstring& strIn)
+{
+	std::string str;
+	int length = ::WideCharToMultiByte(CP_UTF8, 0, strIn.c_str(), strIn.size(), LPSTR(str.c_str()), 0, NULL, NULL);
+	str.resize(length + 1);
+	::WideCharToMultiByte(CP_UTF8, 0, strIn.c_str(), strIn.size(), LPSTR(str.c_str()), length, NULL, NULL);
+	return str;
 }

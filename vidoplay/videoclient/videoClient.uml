@@ -629,10 +629,10 @@
 <XPD:REF name="CallActions[0]">h6eLc7R2VEuOQVyL4ZZQHAAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Operations[6]" type="UMLOperation" guid="FuO2O5RtTESZyN0MSyRfjgAA">
-<XPD:ATTR name="Name" type="string">SetMedial</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">SetMedia</XPD:ATTR>
 <XPD:REF name="Owner">U1/8hQQugkqf02xQKJcPQgAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="vvi28JjgzEuYLJ5cOqA0GAAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="0To6mBNwqEaCJshugfQuOgAA">
 <XPD:ATTR name="Name" type="string">strUrl</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">string</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">FuO2O5RtTESZyN0MSyRfjgAA</XPD:REF>
@@ -1403,7 +1403,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="/pWMoseXck2lPw0rRLL2ygAA">
 <XPD:ATTR name="Alpha" type="real">1.5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">15 : SetMedial()</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">15 : SetMedia()</XPD:ATTR>
 <XPD:REF name="Model">kAn7aItTSEue9tcXdHD4WQAA</XPD:REF>
 <XPD:REF name="HostEdge">2gdcjDGoGkSsJ5GAQwDc9gAA</XPD:REF>
 </XPD:OBJ>
