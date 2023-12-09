@@ -52,6 +52,7 @@ public:
 	float GetPosition();
 	void SetPosition(float pos);
 	int GetVolume();
+	float Getlength();
 	int SetVloume(int volume);
 	VlcSize GetMediaInfo();
 	std::string unicode2utf8(const std::wstring& strIn);
@@ -59,6 +60,7 @@ protected:
 	libvlc_instance_t* m_instance;
 	libvlc_media_t* m_media;
 	libvlc_media_player_t* m_palyer;
+
 	std::string m_url;
 	HWND m_hWnd;
 };
