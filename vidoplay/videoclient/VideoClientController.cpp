@@ -53,10 +53,12 @@ float CVideoClientController::videoctrl(vlcCmd cmd)
 	case VLC_GET_POSITION:
 		return m_vlc.GetPosition();
 	default:
-		return -1.0;
+	case VLC_GET_LENGTH:
+		return m_vlc.Getlength();
+		return -1.0f;
 		break;
 	}
-	return -1.0;
+	return -1.0f;
 }
 
 void CVideoClientController::SetPosition(float pos)
@@ -87,6 +89,11 @@ void CVideoClientController::SetMedia(const std::string strUrl)
 void CVideoClientController::SetHwnd(HWND hWnd)
 {
 	m_vlc.SetHwnd(hWnd);
+}
+
+void CVideoClientController::GetLength()
+{
+	m_vlc.Getlength();
 }
 
 VlcSize CVideoClientController::GetMediaInfo()

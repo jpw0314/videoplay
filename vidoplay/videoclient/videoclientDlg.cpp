@@ -23,6 +23,7 @@ CvideoclientDlg::CvideoclientDlg(CWnd* pParent /*=nullptr*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_status = false;
+	m_length = 0.0f;
 }
 
 void CvideoclientDlg::DoDataExchange(CDataExchange* pDX)
@@ -62,13 +63,13 @@ BOOL CvideoclientDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 	SetTimer(0, 500, NULL);
-	m_pos.SetRange(0, 100); 
+	m_pos.SetRange(0, 1); 
 	m_volume.SetRange(0, 100);
-	m_volume.SetTic(10);
 	m_volume.SetTicFreq(20);
 	SetDlgItemText(IDC_STATIC_VOLUME, _T("100%"));
 	SetDlgItemText(IDC_STATIC_TIME, _T("--:--:--/--:--:--"));
-	m_controllerl->SetHwnd(GetSafeHwnd());
+	m_controllerl->SetHwnd(m_video.GetSafeHwnd());
+	//m_url.SetWindowText( _T("file:///C:\\Users\\peng\Desktop\\123\\move.mp4"));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -119,9 +120,12 @@ void CvideoclientDlg::OnTimer(UINT_PTR nIDEvent)
 		float pos=m_controllerl->videoctrl(VLC_GET_POSITION);
 		if (pos!=-1.0)
 		{
+			if(m_length==0.0f) m_length= m_controllerl->videoctrl(VLC_GET_LENGTH);
+			m_pos.SetRange(0, int(m_length));
 			CString strpos;
-			strpos.Format(_T("%f"), pos);
+			strpos.Format(_T("%0.3f/%0.3f"), pos*m_length,m_length);
 			SetDlgItemText(IDC_STATIC_TIME, strpos);
+			m_pos.SetPos(int(m_length * pos));
 		}
 	}
 	CDialog::OnTimer(nIDEvent);
@@ -143,7 +147,6 @@ void CvideoclientDlg::OnBnClickedBtnPlay()
 		CString url;
 		m_url.GetWindowText(url);
 		m_controllerl->SetMedia(m_controllerl->unicode2utf8((LPCTSTR)url));
-		TRACE("%s", url);
 		m_btnplay.SetWindowText(_T("暂停"));
 		m_status = true;
 		m_controllerl->videoctrl(VLC_PLAY);
@@ -195,7 +198,7 @@ void CvideoclientDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		CString strVolume;
 		strVolume.Format(_T("%d%%"), (nPos));
 		SetDlgItemText(IDC_STATIC_TIME, strVolume);
-		m_controllerl->SetPosition((float)nPos);
+		m_controllerl->SetPosition((float)nPos/m_length);
 	}
 	CDialog::OnHScroll(nSBCode, nPos, pScrollBar);
 }

@@ -8,7 +8,8 @@ enum vlcCmd
 	VLC_PAUSE,
 	VLC_STOP,
 	VLC_GET_VOLUME,
-	VLC_GET_POSITION
+	VLC_GET_POSITION,
+	VLC_GET_LENGTH
 };
 
 class CVideoClientController
@@ -26,6 +27,7 @@ public:
 	int GetVolume();
 	void SetMedia(const std::string strUrl);
 	void SetHwnd(HWND hWnd);
+	void GetLength();
 	VlcSize GetMediaInfo();
 	std::string unicode2utf8(const std::wstring& strIn);
 private:

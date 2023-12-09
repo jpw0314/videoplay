@@ -27,7 +27,7 @@ Vlc::~Vlc()
 
 int Vlc::SetMedia(std::string strUrl)
 {
-	if ((m_instance == NULL)||(m_hWnd=NULL))return -1;
+	if ((m_instance == NULL)||(m_hWnd==NULL))return -1;
 	if (m_url==strUrl)return 0;
 	m_url = strUrl;
 	if (m_media != NULL)
@@ -76,7 +76,7 @@ int Vlc::Stop()
 
 float Vlc::GetPosition()
 {
-	if (!m_palyer || !m_instance || !m_media) return -1.0;
+	if (!m_palyer || !m_instance || !m_media) return -1.0f;
 	return libvlc_media_player_get_position(m_palyer);
 }
 
@@ -90,6 +90,14 @@ int Vlc::GetVolume()
 {
 	if (!m_palyer || !m_instance || !m_media) return -1;
 	return libvlc_audio_get_volume(m_palyer);
+}
+
+float Vlc::Getlength()
+{
+	if (!m_palyer || !m_instance || !m_media) return -1.0f;
+	libvlc_time_t tm=libvlc_media_player_get_length(m_palyer);
+	float ret = tm / 1000.0f;
+	return ret;
 }
 
 int Vlc::SetVloume(int volume)
