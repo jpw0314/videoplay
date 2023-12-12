@@ -2,6 +2,7 @@
 #include "Socket.h"
 #include <map>
 #include "Thread.h"
+#include "Queue.h"
 
 class RTSPRquest
 {
@@ -21,6 +22,7 @@ public:
 	~RTSPResponse();
 	RTSPResponse& operator=(const RTSPResponse& r);
 	RTSPResponse(const RTSPResponse& r);
+	Buffer toBuffer();
 private:
 	int m_method;//0 OPTIONS 1DESCRIBE 2SETUP 3PLAY 4TEARDOWN
 };
@@ -36,24 +38,27 @@ public:
 
 };
 
+
 class RTSPServer
 {
 public:
-	RTSPServer():m_sock(),m_status(0){}
+	RTSPServer():m_sock(),m_status(0),m_pool(10){}
 	~RTSPServer();
 	int Init(const std::string strip="0.0.0.0", short port = 554);
 	int Invoke();
 	void Stop();
 protected:
-	int ThreadWorke(void* arg);
+	int threadWorke(void* arg);
 	RTSPRquest AnalyseRequest(const std::string& data);
-	RTSPResponse MakeReply();
+	RTSPResponse MakeReply(const RTSPRquest& request);
+	int ThreadSessions();
 private:
 	CSock m_sock;
 	int m_status;//0 未初始化 1初始化完成 2正在运行 3关闭
 	CThread m_threadMain;
 	ThreadPool m_pool;
 	std::map < std::string,RTSPResponse> m_sessions;//会话
-
+	EAddr m_addr;
+	CQueue<CSock> m_client;
 };
 
