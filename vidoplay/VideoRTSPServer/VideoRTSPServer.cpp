@@ -1,13 +1,21 @@
 ﻿// VideoRTSPServer.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
-
+#include "RTSPServer.h"
 #include <iostream>
 #include "Socket.h"
+#include <conio.h>
+#include "RTPHelper.h"
 
 int main()
 {
     socketinit init;
-    std::cout << "Hello World!\n";
+    RTSPServer server;
+    server.Init();
+    server.Invoke();
+    printf("press any key to stop!\n");
+    _getch();
+    server.Stop();
+    return 0;
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

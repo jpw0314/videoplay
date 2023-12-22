@@ -1,9 +1,11 @@
 #pragma once
 #include <WinSock2.h>
 #include <string>
-#include <share.h>
+#include <memory>
 #include "Tool.h"
 
+#pragma warning(disable:4996)
+#pragma comment(lib,"ws2_32.lib")
 class EAddr
 {
 public:
@@ -12,7 +14,13 @@ public:
 		memset(&m_addr, 0, sizeof(m_addr));
 		m_addr.sin_family = PF_INET;
 	}
-
+	EAddr(const std::string& IP,unsigned short port)
+	{
+		m_port = (unsigned)port;
+		m_ip = IP;
+		m_addr.sin_port = htons(port);
+		m_addr.sin_addr.S_un.S_addr = inet_addr(IP.c_str());
+	}
 	EAddr(const EAddr& addr)
 	{
 		m_ip = addr.m_ip;
@@ -29,18 +37,34 @@ public:
 		}
 		return *this;
 	}
-
-	~EAddr()
-	{
-
-	}
-	void Update(const std::string& ip, short port)
+	EAddr& operator=(short port)
 	{
 		m_port = port;
+		m_addr.sin_port = htons(port);
+		return *this;
+	}
+
+	~EAddr(){}
+	void Update(const std::string& ip, short port)
+	{
+		m_port =(unsigned) port;
 		m_ip = ip;
 		m_addr.sin_port = htons(port);
 		m_addr.sin_addr.S_un.S_addr = inet_addr(ip.c_str());
 	}
+	void Update()
+	{
+		m_ip = inet_ntoa(m_addr.sin_addr);
+	}
+	const std::string IP()const
+	{
+		return m_ip.c_str();
+	}
+	const unsigned short port()const
+	{
+		return m_port;
+	}
+
 	operator sockaddr_in* ()
 	{
 		return &m_addr;
@@ -57,7 +81,7 @@ public:
 	int size()const { return sizeof(sockaddr_in); }
 private:
 	std::string m_ip;
-	short m_port;
+	unsigned short m_port;
 	sockaddr_in m_addr;
 };
 
@@ -71,7 +95,7 @@ public:
 			m_sock = socket(PF_INET, SOCK_STREAM, 0);
 		}
 		else{
-			m_sock = socket(PF_INET, SOCK_STREAM, 0);
+			m_sock = socket(PF_INET, SOCK_DGRAM, 0);
 		}
 
 	}
@@ -121,7 +145,8 @@ public:
 		}
 		return *this;
 	}
-	operator SOCKET() {
+
+	operator SOCKET()const {
 		return *m_sock;
 	}
 	int Bind(const EAddr& addr)
@@ -153,14 +178,23 @@ public:
 	}
 	int Send(const Buffer& data)
 	{
-		send(*m_sock, data, data.size(),0);
+		printf("send:<%s>\n", (char*)data);
+		int index = 0; 
+		char* pData = data;
+		while (index < (int)data.size())
+		{
+			int ret=send(*m_sock, pData+index,data.size()-index, 0);
+			if (ret < 0) return ret;
+			if (ret==0) break;
+			index += ret;
+		}
+		
+		return index;
 	}
 
 	void Close()
 	{
-
 		m_sock.reset();
-
 	}
 private:
 	std::shared_ptr<Socket> m_sock;

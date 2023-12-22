@@ -2,7 +2,6 @@
 #include <atomic>
 #include <list>
 #include "Thread.h"
-
 #pragma warning(disable:4407)
 
 template<class T>
@@ -80,8 +79,9 @@ public:
 		case IOCP_LIST_CLEAR:
 			m_lstData.clear();
 			delete param;
+			break;
 		default:
-			OutputDebugString("unknown operator\n");
+			TRACE("unknown operator\n");
 			break;
 		}
 	}
@@ -250,7 +250,7 @@ protected:
 			delete param;
 			break;
 		default:
-			OutputDebugString("unknown operator\n");
+			TRACE("unknown operator\n");
 			break;
 		}
 	}

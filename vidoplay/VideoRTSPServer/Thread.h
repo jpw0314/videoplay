@@ -2,8 +2,7 @@
 #include <atomic>
 #include <vector>
 #include <mutex>
-#include <afxstr.h> 
-#include <windows.h>
+#include "Tool.h"
 
 class ThreadFuncBase{};
 typedef int (ThreadFuncBase::*FUNCTYPE) ();
@@ -127,9 +126,7 @@ private:
 					int ret = woker();
 					if (ret != 0)
 					{
-						CString str;
-						str.Format(_T("thread found warning ret=%d"), ret);
-						OutputDebugString(str);
+						TRACE("thread found warning ret =%d\n",ret);
 						break;
 					}
 					else if (ret < 0)
@@ -139,7 +136,6 @@ private:
 						delete pWorker;
 					}
 				}
-			
 			}
 			else
 			{

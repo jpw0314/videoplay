@@ -7,3 +7,5 @@
 /vidoplay/Debug
 /vidoplay/videoclient/Debug
 /vidoplay/videoclient/plugins
+/vidoplay/VideoRTSPServer/out.bin
+/vidoplay/VideoRTSPServer/Debug

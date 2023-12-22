@@ -35,7 +35,7 @@ int Vlc::SetMedia(std::string strUrl)
 		libvlc_media_release(m_media);
 		m_media = NULL;
 	}
-	m_media=libvlc_media_new_path(m_instance,strUrl.c_str());
+	m_media=libvlc_media_new_location(m_instance,strUrl.c_str());
 	if (m_media == NULL) return -2;
 	if (m_palyer != NULL)
 	{
