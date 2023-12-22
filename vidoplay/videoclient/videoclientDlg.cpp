@@ -69,8 +69,12 @@ BOOL CvideoclientDlg::OnInitDialog()
 	SetDlgItemText(IDC_STATIC_VOLUME, _T("100%"));
 	SetDlgItemText(IDC_STATIC_TIME, _T("--:--:--/--:--:--"));
 	m_controllerl->SetHwnd(m_video.GetSafeHwnd());
+<<<<<<< HEAD
 	//m_url.SetWindowText( _T("file:///C:\\Users\\peng\\Desktop\\我的文件\\QQ20231214-174442.mp4"));
 	m_url.SetWindowText(_T("rtsp://127.0.0.1:554"));
+=======
+	//m_url.SetWindowText( _T("file:///C:\\Users\\peng\Desktop\\123\\move.mp4"));
+>>>>>>> c687e5634948b41cbc0c2eb979e61e2ec682c1c1
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
